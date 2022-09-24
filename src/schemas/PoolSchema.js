@@ -1,8 +1,11 @@
-import joi from "joi";
+import DateExtension from "@joi/date";
+import JoiImport from 'joi';
 
+
+const Joi = JoiImport.extend(DateExtension);
 const PollSchema = joi.object({
-    title: joi.string().min(1).required(),
-    expireAt: joi.date().allow("").allow(null)
+    title: Joi.string().min(1).required(),
+    expireAt: Joi.date().format('YYYY-MM-DD HH:mm')
   
 })
 

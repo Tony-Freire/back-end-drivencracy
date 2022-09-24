@@ -13,6 +13,6 @@ catch (error)
      {
         console.log(error.message)
      }
-const database = mongoClient(process.env.MONGO_DATABASE);
+const database = mongoClient.db(process.env.MONGO_DATABASE);
  
-export default database;
+export default database;    

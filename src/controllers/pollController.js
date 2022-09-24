@@ -1,5 +1,6 @@
 import {PollSchema} from "../schemas/PoolSchema.js";
 import dayjs from "dayjs";
+import database from "../database/db.js";
 
 export default async function CreatePoll(req, res)
 {
@@ -18,10 +19,18 @@ export default async function CreatePoll(req, res)
          }
          if(!validation.error&&!expireAt)
          {
+            database.collection('polls').insertOne({
+                title,
+                newExepireAt
+            })
             return res.send(newExepireAt);
          }
          if(!validation.error)
          {
+            database.collection('polls').insertOne({
+                title,
+                expireAt
+            })
             return res.send({title,expireAt});
          }
     }
