@@ -6,8 +6,8 @@ async function CreatePoll(req, res)
 {
     const {title,expireAt} = req.body;
     
-        const newExpire = dayjs().add(30, 'day');
-        const newExepireAt = dayjs(newExpire).format('YYYY-MM-DD HH:mm');     
+        const monthAdd = dayjs().add(30, 'day');
+        const newExepireAt = dayjs(monthAdd).format('YYYY-MM-DD HH:mm');     
         
     
     const validation =PollSchema.validate({title,expireAt});
