@@ -2,7 +2,7 @@ import {PollSchema} from "../schemas/PoolSchema.js";
 import dayjs from "dayjs";
 import database from "../database/db.js";
 
-export default async function CreatePoll(req, res)
+async function CreatePoll(req, res)
 {
     const {title,expireAt} = req.body;
     
@@ -23,7 +23,7 @@ export default async function CreatePoll(req, res)
                 title,
                 newExepireAt
             })
-            return res.send(newExepireAt);
+            return res.send({title,newExepireAt}).status(201);
          }
          if(!validation.error)
          {
@@ -31,12 +31,22 @@ export default async function CreatePoll(req, res)
                 title,
                 expireAt
             })
-            return res.send({title,expireAt});
+            return res.send({title,expireAt}).status(201);
          }
     }
     catch(error){
         console.error(error);
         return 'error';
     }
-    return res.send(console.log("foi"));
 }  
+
+ async function PollView(req, res){
+    try {
+        const polls = await database.collection('polls').find().toArray();
+        return res.send(polls);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+} 
+export {CreatePoll,PollView}
